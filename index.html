@@ -23,11 +23,14 @@
     >
     <ol>
       <li
-      is="todo-item-2"
+      is="todo-item"
       v-for="(todo, index) in todos"
       v-bind:key="todo.id"
       v-bind:title="todo.title"
-      v-on:remove="todos.splice(index, 1)"
+      v-bind:options="options"
+      v-bind:id="todo.id"
+      v-on:remove="removeTodo(index)"
+      v-on:update-list="updateList(value, id)"
       ></li>
     </ol>
   </div>
