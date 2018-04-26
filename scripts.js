@@ -1,13 +1,13 @@
 
 Vue.component('todo-item', {
-  template: `\
-    <li>\
-      {{ title }}\
-      <span>Priority:\
-      <select>\
-        <option v-for="option in options" v-bind:value="option" :selected="checkIfSelectMatchesTodo(option, id)" v-bind:onchange="$emit(\'update-list(value, id)\')"> {{ option }} </option></select></span>\
-      <button v-on:click="$emit(\'remove\')">X</button>\
-    </li>\
+  template: `
+    <li>
+      {{ title }}
+      <span>Priority:
+      <select v-on:change="$emit('update-list', $event.target.value, id)">
+        <option v-for="option in options" v-bind:value="option" :selected="checkIfSelectMatchesTodo(option, id)"> {{ option }} </option></select></span>
+      <button v-on:click="$emit('remove')">X</button>
+    </li>
   `, 
   props: ['title', 'options', 'id'],
   methods: {
@@ -20,6 +20,7 @@ Vue.component('todo-item', {
 const todoApp = new Vue({
   el: '#todoApp',
   data: {
+    newListSelection: '',
     newTodoText: '',
     todos: [
       {
@@ -53,11 +54,15 @@ const todoApp = new Vue({
         todo.id = index + 1;
       })
     }, 
-    updateList: function(value, id){
-      console.log('hi');
+    updateList: function(option, id){
+      console.log(`option: ${option}`);
+      console.log(`id: ${id}`);
       let item = this.todos[id - 1];
       this.todos.splice(id - 1, 1);
-      this.todos.splice(value - 1, 0, item);
+      this.todos.splice(option - 1, 0, item);
+      this.todos.forEach((todo, index) => {
+        todo.id = index + 1;
+      })
     }
   }
 });
