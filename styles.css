@@ -80,7 +80,8 @@ li {
 }
 
 button {
-  margin: 20px;
+  display: block;
+  margin: 0 auto;
   width: 75px;
   font-size: 1.2rem;
   color: whitesmoke;
@@ -136,13 +137,24 @@ option {
 }
 
 .fade-enter-active, .fade-leave-active {
-  transition: opacity .7s;
+  transition: all 0.7s;
 }
 
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
+  transform: translateY(-190px);
+  max-height: 0;
 }
 
-.slide {
-  transition: transform 1s;
+.fade-leave, .fade-enter-to {
+  opacity: 1;
+  max-height: 600px;
+}
+
+.listTransitions-enter-active, .listTransitions-leave-active {
+  transition: all 0.5s;
+}
+
+.listTransitions-enter, .listTransitions-leave-to /* .list-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
