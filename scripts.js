@@ -60,15 +60,21 @@ const todoApp = new Vue({
     },
     saveList: function(){
       localStorage.setItem('vueTodoList', JSON.stringify(this.todos));
+      localStorage.setItem('vueTodoListLastSave', new Date(Date.now()).getDate());
     },
     uploadList: function(){
       const vueTodoList = localStorage.getItem('vueTodoList');
+      const lastSave = localStorage.getItem('vueTodoListLastSave');
+      const todaysDate = new Date(Date.now()).getDate();
       if (vueTodoList) {
         const oldTodos = JSON.parse(vueTodoList);
-        oldTodos.forEach(todo => {
-          this.newTodoText = todo.title;
+        for (let i = 0; i < oldTodos.length; i++) {
+          if (lastSave !== todaysDate && i > 4) {
+            return;
+          }
+          this.newTodoText = oldTodos[i].title;
           this.addNewTodo(true);
-        })
+        }
       }
     }
   }
