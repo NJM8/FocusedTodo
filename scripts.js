@@ -21,23 +21,12 @@ const todoApp = new Vue({
   data: {
     newListSelection: '',
     newTodoText: '',
-    todos: [
-      {
-        id: 1,
-        title: 'Do the dishes'
-      }, {
-        id: 2,
-        title: 'Take out the trash'
-      }, {
-        id: 3,
-        title: 'Mow the lawn'
-      }
-    ],
-    nextTodoId: 4,
-    options: [1, 2, 3]
+    todos: [],
+    nextTodoId: 1,
+    options: []
   },
   methods: {
-    addNewTodo: function(){
+    addNewTodo: function(uploading){
       if (this.todos.length === 10) {
         return;
       }
@@ -47,6 +36,9 @@ const todoApp = new Vue({
         title: this.newTodoText
       });
       this.newTodoText = '';
+      if (!uploading) {
+        this.saveList();
+      }
     },
     removeTodo: function(index){
       this.options.pop();
@@ -54,7 +46,8 @@ const todoApp = new Vue({
       this.todos.splice(index, 1);
       this.todos.forEach((todo, index) => {
         todo.id = index + 1;
-      })
+      });
+      this.saveList();
     }, 
     updateList: function(option, id){
       let item = this.todos[id - 1];
@@ -62,7 +55,23 @@ const todoApp = new Vue({
       this.todos.splice(option - 1, 0, item);
       this.todos.forEach((todo, index) => {
         todo.id = index + 1;
-      })
+      });
+      this.saveList();
+    },
+    saveList: function(){
+      localStorage.setItem('vueTodoList', JSON.stringify(this.todos));
+    },
+    uploadList: function(){
+      const vueTodoList = localStorage.getItem('vueTodoList');
+      if (vueTodoList) {
+        const oldTodos = JSON.parse(vueTodoList);
+        oldTodos.forEach(todo => {
+          this.newTodoText = todo.title;
+          this.addNewTodo(true);
+        })
+      }
     }
   }
 });
+
+todoApp.uploadList();

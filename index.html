@@ -18,7 +18,7 @@
   <div id="todoApp">
     <input 
       v-model="newTodoText"
-      v-on:keyup.enter="addNewTodo"
+      v-on:keyup.enter="addNewTodo(false)"
       placeholder="Add a todo"  
     >
     <ul>
