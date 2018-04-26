@@ -4,7 +4,7 @@ Vue.component('todo-item', {
     <li>
       <select v-on:change="$emit('update-list', $event.target.value, id)">
         <option v-for="option in options" v-bind:value="option" :selected="checkIfSelectMatchesTodo(option, id)"> {{ option }} </option></select>
-      <button v-on:click="$emit('remove')"></button>
+      <button class="remove" v-on:click="$emit('remove')"></button>
       {{ title }}
     </li>
   `, 
@@ -23,9 +23,13 @@ const todoApp = new Vue({
     newTodoText: '',
     todos: [],
     nextTodoId: 1,
-    options: []
+    options: [],
+    showAbout: false
   },
   methods: {
+    toggleShowAbout: function(){
+      this.showAbout ? this.showAbout = false : this.showAbout = true; 
+    },
     addNewTodo: function(uploading){
       if (this.todos.length === 10) {
         return;
