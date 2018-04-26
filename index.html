@@ -6,6 +6,7 @@
   <meta name="description" content="A focused todo application that keeps your list short">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Focused Todo</title>
+  <link href="https://fonts.googleapis.com/css?family=Cabin" rel="stylesheet"> 
   <link rel="stylesheet" href="styles.css">
   <!-- development version, includes helpful console warnings -->
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -14,15 +15,16 @@
 </head>
 <body>
   <h1>Focused Todo</h1>
-  <p>Welcome to your todo list, what makes it focused? You can only add ten tasks to the list, when you open the list tomorrow there will only be 5 items on the list. The five items with the lowest priority will be removed automatically. This forces you to really focus on what needs to be done each day, allowing you to add new items each day, but you must complete them!</p>
+  <p>Welcome to your todo list, what makes it focused? You can only add ten tasks to the list, when you open the list tomorrow there will only be 5 items on the list. The five items with the lowest priority will be removed automatically. This forces you to really focus on what needs to be done each day, allowing you to add new items each day, but you must complete them! Be sure to keep your most important items at the top.</p>
   <div id="todoApp">
     <input 
       v-model="newTodoText"
       v-on:keyup.enter="addNewTodo(false)"
       placeholder="Add a todo"  
     >
-    <ul>
-      <li
+    <div id="listContainer">
+      <ul>
+        <li
         is="todo-item"
         v-for="(todo, index) in todos"
         v-bind:key="todo.id"
@@ -31,9 +33,11 @@
         v-bind:id="todo.id"
         v-on:remove="removeTodo(index)"
         v-on:update-list="updateList"
-      ></li>
-    </ul>
+        ></li>
+      </ul>
+    </div>
   </div>
+  <a href="https://www.natethedev.com/" target="_blank" rel="noopener"\>Created by Nate Mallison</a>
   <script src="scripts.js"></script>
 </body>
 </html>

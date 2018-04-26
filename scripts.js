@@ -4,7 +4,7 @@ Vue.component('todo-item', {
     <li>
       <select v-on:change="$emit('update-list', $event.target.value, id)">
         <option v-for="option in options" v-bind:value="option" :selected="checkIfSelectMatchesTodo(option, id)"> {{ option }} </option></select>
-      <button v-on:click="$emit('remove')">X</button>
+      <button v-on:click="$emit('remove')"></button>
       {{ title }}
     </li>
   `, 
