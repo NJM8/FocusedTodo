@@ -2,11 +2,10 @@
 Vue.component('todo-item', {
   template: `
     <li>
-      {{ title }}
-      <span>Priority:
       <select v-on:change="$emit('update-list', $event.target.value, id)">
-        <option v-for="option in options" v-bind:value="option" :selected="checkIfSelectMatchesTodo(option, id)"> {{ option }} </option></select></span>
+        <option v-for="option in options" v-bind:value="option" :selected="checkIfSelectMatchesTodo(option, id)"> {{ option }} </option></select>
       <button v-on:click="$emit('remove')">X</button>
+      {{ title }}
     </li>
   `, 
   props: ['title', 'options', 'id'],
@@ -39,6 +38,9 @@ const todoApp = new Vue({
   },
   methods: {
     addNewTodo: function(){
+      if (this.todos.length === 10) {
+        return;
+      }
       this.options.push(this.nextTodoId);
       this.todos.push({
         id: this.nextTodoId++,
@@ -55,8 +57,6 @@ const todoApp = new Vue({
       })
     }, 
     updateList: function(option, id){
-      console.log(`option: ${option}`);
-      console.log(`id: ${id}`);
       let item = this.todos[id - 1];
       this.todos.splice(id - 1, 1);
       this.todos.splice(option - 1, 0, item);
